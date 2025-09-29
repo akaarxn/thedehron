@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files</title>
+    <style>
+        body {
+            background-color: black;
+            color: green;
+            font-family: monospace;
+            font-size: 16px;
+            margin: 0;
+            padding: 10px;
+        }
+
+        #loading-screen {
+            padding-left: 20px;
+            padding: 10px;
+        }
+
+        #map {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 10px;
+            display: none;
+        }
+
+        #terminal {
+            white-space: pre-line;
+            padding-left: 20px;
+            margin-top: 10px;
+            display: none; /* Aparece después de la animación */
+        }
+
+        a {
+            text-decoration: underline dotted;
+            color: green; 
+            cursor: pointer;
+        }
+
+        .folder {
+            padding-left: 20px;
+        }
+
+        .file:hover {
+            color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div id="loading-status" style="white-space: nowrap;"></div>
+    </div>
+
+    <!-- File Map -->
+    <div id="map">
+        <div>root/</div>
+        <div class="folder">├── home/</div>
+        <div class="folder">│ ㅤ  ├── user/</div>
+        <div class="folder">│ ㅤ  │ ㅤ  ├── documents/</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/howl-in-notes.zip" class="zip-file">howl-in-notes.zip/</a></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── asdhDd5adr3h1j0hdbE4hd5jwbx6b9.mp3</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── kxNwb1ydnuEv2j1dSdh1uf1b3hf8tf.mp3</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── kfÓc4ia4n3u7gvNyi3j3nok3bfcej9.mp3</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── ke0md3i2Lg7dbd3o1d4E4a1bd8fab3.mp3</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     └── ...</div>
+        <div class="folder">│ ㅤ  │ ㅤ  ├── downloads/</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/voces-del-dehron.zip" class="zip-file">voces-del-dehron.zip/</a></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── encuentro-unico.pdf</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── pintura-al-oleo.pdf</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── nunca-amanecio.pdf</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── sonrisa-efimera.pdf</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     └── ...</div>
+        <div class="folder">│ ㅤ  │ ㅤ  ├── shared/</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ  └── ...</div>
+        <div class="folder">│ ㅤ  │ ㅤ  ├── images/</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ  └── ...</div>
+    </div>
+
+    <!-- Terminal / Permission Denied -->
+    <div id="terminal">
+        root@localhost:~$ 
+    </div>
+
+    <script>
+        // Animación de carga principal
+        const loadingStatus = document.getElementById("loading-status");
+        const loadingMessages = ["root@localhost:~$ Welcome back DEhRON."];
+        const loadingSymbols = ['|', '/', '-', '\\'];
+
+        let symbolIndex = 0;
+        let messageIndex = 0;
+        let loadingText = "root@localhost:~$ ";
+        let progressText = "";
+
+        function updateLoadingStatus() {
+            progressText = loadingText + loadingSymbols[symbolIndex];
+            loadingStatus.textContent = progressText;
+            symbolIndex = (symbolIndex + 1) % loadingSymbols.length;
+        }
+
+        function updateMessage() {
+            if (messageIndex < loadingMessages.length) {
+                loadingText = loadingMessages[messageIndex];
+                messageIndex++;
+            }
+        }
+
+        function startLoading() {
+            updateMessage();
+            const interval = setInterval(() => {
+                updateLoadingStatus();
+                if (progressText.includes('\\')) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').style.display = 'none';
+                        document.getElementById('map').style.display = 'flex';
+                        document.getElementById('terminal').style.display = 'block'; // Aparece después de la animación
+                    }, 2000);
+                }
+            }, 200);
+        }
+
+        startLoading();
+
+        // Permission denied con escritura retro y desaparece
+        const zipLinks = document.querySelectorAll('.zip-file');
+        const terminal = document.getElementById('terminal');
+
+        zipLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const fileName = link.textContent.replace('/', '');
+                
+                terminal.textContent = "root@localhost:~$ "; // Línea de comando visible
+
+                const message = `./${fileName}\nPermission denied.`;
+                let index = 0;
+
+                const typing = setInterval(() => {
+                    terminal.textContent += message.charAt(index);
+                    index++;
+                    if(index >= message.length) {
+                        clearInterval(typing);
+                        // Después de 3 segundos, limpiar la respuesta dejando solo la línea de comando
+                        setTimeout(() => {
+                            terminal.textContent = "root@localhost:~$ ";
+                        }, 3000);
+                    }
+                }, 50); // Velocidad de escritura
+            });
+        });
+    </script>
+</body>
+</html>
