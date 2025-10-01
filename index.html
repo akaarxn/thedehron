@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dehron-33.333333333333333333333333333333333333%</title>
+    <title>dehron 33.33%</title>
     <link rel="icon" type="image/png" href="files/thedehron-favicon.png">
 
     <style>
@@ -33,7 +33,7 @@
             white-space: pre-line;
             padding-left: 20px;
             margin-top: 10px;
-            display: none; /* Aparece después de la animación */
+            display: none;
         }
 
         a {
@@ -52,29 +52,27 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div id="loading-screen">
         <div id="loading-status" style="white-space: nowrap;"></div>
     </div>
 
-    <!-- File Map -->
     <div id="map">
         <div>root/</div>
         <div class="folder">├── home/</div>
         <div class="folder">│ ㅤ  ├── user/</div>
         <div class="folder">│ ㅤ  │ ㅤ  ├── documents/</div>
-        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/howl-in-notes.zip" class="zip-file">howl-in-notes.zip/</a></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/aullido-en-notas.rar" class="zip-file">aullido-en-notas.rar/</a></div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── asdhDd5adr3h1j0hdbE4hd5jwbx6b9.mp3</div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── kxNwb1ydnuEv2j1dSdh1uf1b3hf8tf.mp3</div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── kfÓc4ia4n3u7gvNyi3j3nok3bfcej9.mp3</div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── ke0md3i2Lg7dbd3o1d4E4a1bd8fab3.mp3</div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     └── ...</div>
         <div class="folder">│ ㅤ  │ ㅤ  ├── downloads/</div>
-        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/voces-del-dehron.zip" class="zip-file">voces-del-dehron.zip/</a></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │   └── <a href="files/consecuencias-del-dehron.rar" class="zip-file">consecuencias-del-dehron.rar/</a></div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── encuentro-unico.pdf</div>
-        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── pintura-al-oleo.pdf</div>
-        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── nunca-amanecio.pdf</div>
-        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── sonrisa-efimera.pdf</div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── <s>nU`DL_D72mº.wav</s></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── <s>pI.tD/a-!l-)`eo.wav</s></div>
+        <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     ├── <s>s..Bz-a-eFpºe_a.wav</s></div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ     └── ...</div>
         <div class="folder">│ ㅤ  │ ㅤ  ├── shared/</div>
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ  └── ...</div>
@@ -82,13 +80,11 @@
         <div class="folder">│ ㅤ  │ ㅤ  │ ㅤ  └── ...</div>
     </div>
 
-    <!-- Terminal / Permission Denied -->
     <div id="terminal">
         root@localhost:~$ 
     </div>
 
     <script>
-        // Animación de carga principal
         const loadingStatus = document.getElementById("loading-status");
         const loadingMessages = ["root@localhost:~$ Welcome back DEhRON."];
         const loadingSymbols = ['|', '/', '-', '\\'];
@@ -128,7 +124,6 @@
 
         startLoading();
 
-        // Permission denied con escritura retro y desaparece
         const zipLinks = document.querySelectorAll('.zip-file');
         const terminal = document.getElementById('terminal');
 
@@ -137,7 +132,7 @@
                 e.preventDefault();
                 const fileName = link.textContent.replace('/', '');
                 
-                terminal.textContent = "root@localhost:~$ "; // Línea de comando visible
+                terminal.textContent = "root@localhost:~$ ";
 
                 const message = `./${fileName}\nPermission denied.`;
                 let index = 0;
@@ -147,12 +142,11 @@
                     index++;
                     if(index >= message.length) {
                         clearInterval(typing);
-                        // Después de 3 segundos, limpiar la respuesta dejando solo la línea de comando
                         setTimeout(() => {
                             terminal.textContent = "root@localhost:~$ ";
                         }, 3000);
                     }
-                }, 50); // Velocidad de escritura
+                }, 50);
             });
         });
     </script>
